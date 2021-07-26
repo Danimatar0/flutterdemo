@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: router.controller,
-        initialRoute: router.profilescreen,
+        initialRoute: router.homeScreen,
       ),
     );
   }
