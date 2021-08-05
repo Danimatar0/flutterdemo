@@ -36,6 +36,18 @@ class _AboutScreenState extends State<AboutScreen> {
     });
   }
 
+  Future<void> loadUser() async {
+    dynamic response = await HTTPRequest.fetchUsers();
+    users = response;
+    setState(() {
+      listtiles = users
+          .map((e) => ListTile(
+                title: Text(e['title']),
+              ))
+          .toList();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -45,6 +57,7 @@ class _AboutScreenState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(16),
@@ -65,8 +78,11 @@ class _AboutScreenState extends State<AboutScreen> {
                 ),
               ),
               Expanded(
-                  child: ListView(
-                children: listtiles,
+                  child: RefreshIndicator(
+                onRefresh: loadUser,
+                child: ListView(
+                  children: listtiles,
+                ),
               ))
             ],
           ),
